@@ -1,28 +1,22 @@
 package common.controller;
 
-abstract public class AbstractAction implements Action {
-	// execeute() 추상메서드를 가짐
-	private String viewPage; // 보여줄 뷰 페이지 이름
-	private boolean isRedirect; // true이면 redirect 이동, false면 forward 이동
+abstract public class AbstractAction implements Action{
 	
+	//execute()추상메서드를 가짐
+	private String viewPage; //보여줄 뷰페이지 이름
+	private boolean isRedirect;//true면 redirect이동, false면 forward이동
 	
-	//setter, getter
-	public void setViewPage(String viewPage) {
-		this.viewPage = viewPage;
-	}
-	
-	public void setRedirect(boolean isRedirect) {
-		this.isRedirect = isRedirect;
-	}
-	
+	//setter,getter---
 	public String getViewPage() {
 		return viewPage;
 	}
-	
+	public void setViewPage(String viewPage) {
+		this.viewPage = viewPage;
+	}
 	public boolean isRedirect() {
 		return isRedirect;
 	}
-	
-	
-	
-}// AbstractAction end -------------
+	public void setRedirect(boolean isRedirect) {
+		this.isRedirect = isRedirect;
+	}
+}///////////////////////////////

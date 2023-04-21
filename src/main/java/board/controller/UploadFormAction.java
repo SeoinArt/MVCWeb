@@ -5,13 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import common.controller.AbstractAction;
 
-public class BoardFormAction extends AbstractAction {
+public class UploadFormAction extends AbstractAction {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		
-		
-		this.setViewPage("/board/boardWrite.jsp");
+		this.setViewPage("./board/uploadForm.jsp");
 		this.setRedirect(false);
 	}
+
 }

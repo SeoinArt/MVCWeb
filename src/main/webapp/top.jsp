@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"   %>
 <% 
-	String myctx=request.getContextPath(); //컨텍스트명 알아내기
+	String myctx=request.getContextPath();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,16 +33,18 @@
                 <li><a href="<%=myctx%>/index.do">HOME</a></li>
                 
                 
-				<li><a href="<%=myctx%>/join.do">Signup</a></li>
-               	<li><a href="<%=myctx%>/login.do">Signin</a></li>
+                	<li><a href="<%=myctx%>/join.do">Signup</a></li>
+               		 <li><a href="<%=myctx%>/login.do">Signin</a></li>
                 
-                <li><a href="<%=myctx%>/logout.do">Logout</a></li>
+                	<li><a href="<%=myctx%>/logout.do">Logout</a></li>
+               
                 <li><a href="<%=myctx%>/user/boardForm.do">Board 쓰기</a></li>
                 
-                <li><a href="<%=myctx%>/user/boardList.do">Board 목록</a></li>
+                <li><a href="<%=myctx%>/boardList.do">Board 목록</a></li>
                 
                 <li style="background-color:#19376D;border-radius:5px">
-                	<a href="#" style='color:white'>a 님 로그인 중</a>
+                <a href="#" style='color:white'>a 님 로그인 중</a>
+                
             </ul>
         </nav>
         <div class="cls"></div>

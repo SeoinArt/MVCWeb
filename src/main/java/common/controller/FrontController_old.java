@@ -1,4 +1,5 @@
 package common.controller;
+
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -9,58 +10,57 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Servlet implementation class FrontController
+ 
 @WebServlet(
 		urlPatterns = { "*.me" }, 
 		initParams = { 
 				@WebInitParam(name = "config", value = "파일경로")
-		})
+		})*/
 public class FrontController_old extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		process(req,res);
 	}
 
-	
+
 	private void process(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		// 1. 클라이언트의 요청 URI를 분석해보자
-		// http://locathost:9090/MVCWeb/index.do ==> URL
-		
-		String uri = req.getRequestURI();
-		System.out.println("uri : "+ uri); // "/MVCWeb/index.do" => index.jsp 보여주기
-										   // "/MVCWeb/test.dp" => hello.jsp 보여주기
-		
-		String ctx = req.getContextPath(); // "/MVCWeb"
-		String cmd = uri.substring(ctx.length());
-		System.out.println("cmd : "+cmd);
+		//System.out.println("process()");
+		//http://localhost:9090/MVCWeb/index.do  ==>URL
+		//1. 클라이언트의 요청 URI를 분석해보자
+		String uri=req.getRequestURI();
+		System.out.println("uri: "+uri);// "/MVCWeb/index.do" ==> index.jsp보여주기
+										// "/MVCWeb/test.do"  ==> hello.jsp보여주기 
+		String ctx=req.getContextPath();// "/MVCWeb"
+		String cmd=uri.substring(ctx.length());
+		System.out.println("cmd: "+cmd);
 		
 		boolean isRedirect=true;
 		String viewPage="";
 		
 		if(cmd.equals("/index.do")) {
 			req.setAttribute("msg", "Hi MVCWeb Index Page");
-			viewPage = "index.jsp";
-		}
-		else if(cmd.equals("/test.do")) {
+			viewPage="index.jsp";
+		}else if(cmd.equals("/test.do")) {
 			req.setAttribute("msg", "Hello MVCWeb Hello Page");
-			viewPage = "hello.jsp";
+			viewPage="hello.jsp";
 		}
 		
-		// 페이지 이동 ----------------------------------------------------
+		//페이지 이동-----
 		if(isRedirect) {
-			// redirect 방식으로 이동
+			//redirect방식으로 이동
 			res.sendRedirect(viewPage);
-			
 		}else {
-			// forward 방식으로 이동
-			RequestDispatcher disp = req.getRequestDispatcher(viewPage);
-			disp.forward(req,res);
+			//foward방식으로 이동
+			RequestDispatcher disp=req.getRequestDispatcher(viewPage);			
+			disp.forward(req, res);
 		}
 	}
-
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		process(req,res);
 	}
+
 }
