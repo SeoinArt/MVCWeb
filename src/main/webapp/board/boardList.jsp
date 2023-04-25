@@ -99,7 +99,13 @@
 						  -->
 		    			<li>${vo.num}</li>
 		    			<li>
-		    				<a href="boardView.do?num=a">${vo.subject}</a>
+		    				<a href="boardView.do?num=${vo.num}">${vo.subject}</a>
+		    				
+		    				<!-- 첨부파일 이미지 출력 -->
+		    				<c:if test="${vo.filesize>0}">
+		    				<span class='attach'></span>
+		    				<img src = 'images/attach.png' style="width:16px" >
+		    				</c:if>
 		    			</li>
 		    			<li>${vo.userid}</li>
 		    			<li>

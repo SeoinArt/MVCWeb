@@ -12,12 +12,14 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import board.model.BoardDAO;
 import board.model.BoardVO;
 import common.controller.AbstractAction;
+
+// cos.jar 다운로드 "MVCWeb/WEB-INF/lib/cos.jar"
 public class BoardWriteAction extends AbstractAction {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		//1. post방식 한글 처리==>필터를 만들어서 처리
-		req.setCharacterEncoding("utf-8");
+//		req.setCharacterEncoding("utf-8");
 		
 		//2. 파일 업로드 처리 ==> 라이브러리 다운로드후
 		// 업로드할 디렉토리 절대경로 얻기

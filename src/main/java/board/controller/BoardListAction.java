@@ -11,9 +11,6 @@ import common.controller.AbstractAction;
 
 public class BoardListAction extends AbstractAction {
 	
-	
-	
-	
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		BoardDAO dao =new BoardDAO();
