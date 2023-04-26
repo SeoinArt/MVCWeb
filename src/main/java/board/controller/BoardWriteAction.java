@@ -5,6 +5,7 @@ import java.io.File;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -12,12 +13,19 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import board.model.BoardDAO;
 import board.model.BoardVO;
 import common.controller.AbstractAction;
+import user.model.UserVO;
 
 // cos.jar 다운로드 "MVCWeb/WEB-INF/lib/cos.jar"
 public class BoardWriteAction extends AbstractAction {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		/*HttpSession ses = req.getSession();
+		UserVO user =(UserVO)ses.getAttribute("loginUser");*/
+		
+		UserVO user = this.getLoginUser(req);
+		
 		//1. post방식 한글 처리==>필터를 만들어서 처리
 //		req.setCharacterEncoding("utf-8");
 		
@@ -36,7 +44,7 @@ public class BoardWriteAction extends AbstractAction {
 		System.out.println("업로드 성공");
 		
 		//3. 사용자가 입력한 값 받기
-		String userid="hong";//세션에서 로그인한 사용자 아이디
+		String userid=user.getUserid();//세션에서 로그인한 사용자 아이디
 		String subject=mr.getParameter("subject");
 		String content=mr.getParameter("content");
 		/*String filename=mr.getParameter("filename");*/

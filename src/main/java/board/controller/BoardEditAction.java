@@ -1,20 +1,26 @@
 package board.controller;
 
 
-import javax.servlet.http.*;
+import java.io.File;
 
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import board.model.BoardDAO;
+import board.model.BoardVO;
 import common.controller.AbstractAction;
-import com.oreilly.servlet.*;
-import com.oreilly.servlet.multipart.*;
-import java.io.*;
-import board.model.*;
+import user.model.UserVO;
 
 public class BoardEditAction extends AbstractAction {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		
+		
+		
 		// 0. post 방식일 때 한글 처리 --> EncodingFilter 통해 처리
 		req.setCharacterEncoding("utf-8");
 		
@@ -39,8 +45,12 @@ public class BoardEditAction extends AbstractAction {
 			return;
 		} // if -----------------------------------------------------------
 		
+		
+		UserVO user = this.getLoginUser(req);
+		
+		
 		String content = mr.getParameter("content");
-		String userid = "hong";
+		String userid = user.getUserid();
 		String filename = mr.getFilesystemName("filename");
 		long filesize = 0;
 		File file = mr.getFile("filename");

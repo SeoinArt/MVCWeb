@@ -7,6 +7,7 @@ import board.model.BoardDAO;
 import board.model.BoardVO;
 import common.controller.AbstractAction;
 
+
 public class BoardViewAction extends AbstractAction {
 
 	@Override

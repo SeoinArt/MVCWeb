@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/top.jsp"/>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -17,31 +16,31 @@
 		float:left;
 		width:15%;
 	}
-	#boardList>li:nth-child(5n){
+	#boardList>li:nth-child(5n+1){
 		width:10%;
 	}
-	#boardList>li:nth-child(5n+1){
+	#boardList>li:nth-child(5n){
 		width:10%;
 	}
 	#boardList>li:nth-child(5n+2){
 		width:50%;
-		/* 제목이 오버플로우 될 경우 말줄임표 출력  */
+		/*제목 오버플로우 될 경우 말줄임표 출력  */
 		white-space:nowrap;
-		overflow:hidden;
+		overflow: hidden;
 		text-overflow:ellipsis;
 	}
 	a:link,a:visited,a:hover{
 		text-decoration:none;
 	}
 	.pageWrap{
-		position:relative;
+		position:relative;		
 	}
 	.paging{
 		list-style-type:none;
 		position:absolute;
 		top:50%;
-		left:50%;
-		transform: tanslate(-50%,-50%);
+		left:50%; 
+		transform: translate(-50%, -50%); 
 	}
 	.paging>li{
 		float:left;
@@ -70,7 +69,7 @@
     	<p>
     	<a href="user/boardForm.do">글쓰기</a> | <a href="boardList.do">글목록</a>
     	</p>
-    	<br>
+    	
     	<%-- ${requsetScope.boardArr}  --%>
     	<div id="boardWrap">
     		<ul id="boardList">
@@ -120,15 +119,26 @@
     		<br><br>
     		<div class="pageWrap">
     			<ul class="paging">
-    				<li><a>◀</a></li>
-    				<li class='current'><a>1</a></li>
-    				<li><a>2</a></li>
-    				<li><a>▶</a></li>
+    				<c:if test="${(cpage)>1 }">
+    					<li><a href="boardList.do?cpage=${cpage-1}">◀</a></li>
+    				</c:if>
+    				<!-- <li class='current'><a>1</a></li> -->
+	    			<c:forEach var="i" begin="1" end ="${pageCount}">	
+	    				<c:if test = "${cpage eq i }"> 
+	    					<li class='current'><a href="boardList.do?cpage=${i}">${i}</a></li>
+	    				</c:if>
+	    				<c:if test = "${cpage ne i}"> 
+	    					<li><a href="boardList.do?cpage=${i}">${i}</a></li>
+	    				</c:if>
+    				</c:forEach>
+    				<c:if test="${cpage<pageCount }">
+    					<li><a href="boardList.do?cpage=${cpage+1}">▶</a></li>
+    				</c:if>
     			</ul>
     		</div>
     		<br><br>
     		<div>
-    			총 게시글 수: ${totalCount}개,  현재 <span class='cpage'>1</span> / 총  pages
+    			총 게시글 수: ${totalCount}개,  현재 <span class='cpage'>${cpage}</span> / 총  ${pageCount} pages
     		</div>    		
     	</div>
     </div>
