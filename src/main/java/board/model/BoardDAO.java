@@ -87,6 +87,46 @@ public class BoardDAO {
 	}// ---------------------------------------------------------
 	
 	
+	
+	/** board 카디날리티를 구하는 메서드
+	 * @return cnt
+	 * @throws SQLException
+	 */
+	public int getTotalCount(String type, String keyword) throws SQLException {
+		try {
+			con = DBUtil.getCon();
+//			String sql = "select count(num) from board";
+			StringBuilder buf = new StringBuilder("select count(num)cnt from board ");
+			
+			if(!type.trim().isEmpty()&& !keyword.trim().isEmpty()) {
+				String colName =getColumnName(type);
+				buf.append(" where "+colName+" like ?");
+			}
+			
+			String sql = buf.toString();
+			System.out.println(sql);
+			ps = con.prepareStatement(sql);
+			if(!type.trim().isEmpty()&& !keyword.trim().isEmpty()) {
+				ps.setString(1, "%"+keyword+"%"); 
+			}
+			rs = ps.executeQuery();
+			rs.next();
+			int cnt = rs.getInt(1);
+			return cnt;
+		} finally {
+			close();
+		}
+	}// ---------------------------------------------------
+
+	
+	
+	
+	/** 지정한 pageSize만큼 목록의 일부를 가져오는 메소드
+	 * @param start
+	 * @param end
+	 * @return makeList(rs)
+	 * @throws SQLException
+	 */
 	public List<BoardVO> listBoard(int start, int end) throws SQLException {
 		try {
 			con = DBUtil.getCon();
@@ -105,42 +145,57 @@ public class BoardDAO {
 		} finally {
 			close();
 		}
-		
-		
-
+	}//---------------------------------------------------------------------------------
+	
+	public List<BoardVO> listBoard(int start, int end, String findType, String findKeyword) throws SQLException {
+		try {
+			con = DBUtil.getCon();
+			String colName = getColumnName(findType); // 검색 유형 관련한 컬럼명 얻어오기
+			StringBuilder buf = new StringBuilder("select * from ( ")
+					.append(" select rownum rn, A.* from  ")
+					.append(" (select * from board where "+colName+" like ? ")
+					.append(" order by num desc) A) ")
+					.append(" where rn between ? and ? ");
+			String sql = buf.toString();
+			System.out.println(sql);
+			ps = con.prepareStatement(sql);
+			ps.setString(1, "%"+findKeyword+"%");
+			ps.setInt(2, start);
+			ps.setInt(3, end);
+			rs = ps.executeQuery();
+			
+			return makeList(rs);
+			
+		} finally {
+			close();
+		}
 	}
 	
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	/** board 카디날리티를 구하는 메서드
-	 * @return cnt
-	 * @throws SQLException
+	 
+	/** 검색 type를 통해서 where 절 조건 
+	 * @param type
+	 * @return colName
 	 */
-	public int getTotalCount() throws SQLException {
-		try {
-			con = DBUtil.getCon();
-			String sql = "select count(num) from board";
-			ps = con.prepareStatement(sql);
-			rs = ps.executeQuery();
-			
-			rs.next();
-			int cnt = rs.getInt(1);
-			return cnt;
-		} finally {
-			close();
+	public String getColumnName(String type) {
+		String colName ="";
+		switch(type) {
+		case "1": colName="subject"; break;
+		case "2": colName="userid"; break;
+		case "3": colName="content"; break;
 		}
-	}// ---------------------------------------------------
+		return colName;
+	}//-------------------------------------------------------------------------------------------
 	
+	
+
+	
+	
+	
+
 	
 	/** 글번호로 조회수를 가져오는 메서드
 	 * @return
@@ -268,6 +323,10 @@ public class BoardDAO {
 		}
 	}//------------------------------
 
+
+
+
+	
 
 
 

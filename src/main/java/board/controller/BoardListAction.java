@@ -24,10 +24,22 @@ public class BoardListAction extends AbstractAction {
 		if(cpage<=0) {
 			cpage = 1; 
 		}
+		// 검색 유형과 검색어 받기
+		String findType = req.getParameter("findType");
+		String findKeyword = req.getParameter("findKeyword");
+		
+		if(findType==null) {
+			findType="";
+		}
+		if(findKeyword == null) {
+			findKeyword="";
+		}
 		
 		
-		// 1. 총 게시글 수 가져오기
-		int totalCount = dao.getTotalCount();
+		
+		
+		// 1. 총 게시글 수 또는 검색한 게이술 수 가져오기
+		int totalCount = dao.getTotalCount(findType,findKeyword);
 		
 		// 2. 페이지당 출력할 목록의 개수 정하기
 		final int pageSize = 5;
@@ -48,18 +60,30 @@ public class BoardListAction extends AbstractAction {
 		// 6. BoardDAO 에 start, end 값 넘겨서 subquery이용해서 현재 보여줄 페이지에 해당하는 데이터만 출력한다		
 		int end = cpage * pageSize;
 		int start = end - (pageSize-1);
-		List<BoardVO> boardArr = dao.listBoard(start, end);
+		List<BoardVO> boardArr = null;
 		
-
+		if(!findType.equals("")&& !findKeyword.equals("")) {
+			boardArr = dao.listBoard(start, end,findType,findKeyword);
+		
+		}else {
+			boardArr = dao.listBoard(start, end); // 페이징 처리시
+		}
 		
 		// 글 목록 가져오기
 //		List<BoardVO> boardArr = dao.listBoard(); 페이징 처리 안할때
+		
+		String queryStr="&findType="+findType+"&findKeyword="+findKeyword;
+		
+		
 		
 		req.setAttribute("boardArr", boardArr);
 		req.setAttribute("totalCount", totalCount);
 		req.setAttribute("pageCount",pageCount);
 		req.setAttribute("cpage", cpage);
 		req.setAttribute("pageSize", pageSize);
+		req.setAttribute("findType", findType);
+		req.setAttribute("findKeyword", findKeyword);
+		req.setAttribute("qStr", queryStr);
 		
 		this.setViewPage("/board/boardList.jsp");
 		this.setRedirect(false);

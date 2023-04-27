@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"   %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+
 <%-- 
 	String myctx=request.getContextPath();
 --%>
@@ -17,6 +18,7 @@
     <title>homepage</title>
     <!-- layout.css파일을 참조하세요 -->
     <link rel="stylesheet" type="text/css" href="${myctx}/css/layout.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <!-- http://localhost:9090/css/layout.css -->
     <!-- "webapps/ROOT" ===>"/" -->
     
