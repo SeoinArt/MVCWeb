@@ -159,7 +159,7 @@
     				</c:if>	
     				<!-- <li class='current'><a>1</a></li> -->
 	    			<c:forEach var="i" begin="1" end ="${pageCount}">	
-	    				<c:if test = "${cpage eq i }"> 
+	    				<c:if test xdl= "${cpage eq i }"> 
 	    					<li class='current'><a href="boardList.do?cpage=${i}${qStr}">${i}</a></li>
 	    				</c:if>
 	    				<c:if test = "${cpage ne i}"> 
